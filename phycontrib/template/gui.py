@@ -21,6 +21,7 @@ from phy.cluster.views import (WaveformView,
                                CorrelogramView,
                                ScatterView,
                                ProbeView,
+                               SpatialView,
                                select_traces,
                                )
 from phy.cluster.views.trace import _iter_spike_waveforms
