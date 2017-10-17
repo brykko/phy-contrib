@@ -532,7 +532,16 @@ class TemplateController(EventEmitter):
                       )
         v.attach(gui)
         return v
-
+    
+    # Spatial view
+    # -------------------------------------------------------------------------
+    def add_spatial_view(self, gui):
+        v = SpatialView(spike_times=self.spike_times,
+                            spike_clusters=self.spike_clusters,
+                            sample_rate=self.sample_rate,
+                            )
+        return self._add_view(gui, v)
+    
     # GUI
     # -------------------------------------------------------------------------
 
@@ -545,6 +554,7 @@ class TemplateController(EventEmitter):
         self.supervisor.attach(gui)
 
         self.add_waveform_view(gui)
+        self.add_spatial_view(gui)
         if self.model.traces is not None:
             self.add_trace_view(gui)
         if self.model.features is not None:
