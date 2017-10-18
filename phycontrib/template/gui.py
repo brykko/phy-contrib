@@ -10,7 +10,7 @@
 import logging
 from operator import itemgetter
 import os.path as op
-
+import pdb
 import click
 import numpy as np
 
@@ -537,9 +537,11 @@ class TemplateController(EventEmitter):
     # Spatial view
     # -------------------------------------------------------------------------
     def add_spatial_view(self, gui):
-        v = SpatialView(spike_times=self.spike_times,
-                            spike_clusters=self.spike_clusters,
-                            sample_rate=self.sample_rate,
+        # pdb.set_trace()
+        m = self.model
+        v = SpatialView(spike_times=m.spike_times,
+                            spike_clusters=m.spike_clusters,
+                            sample_rate=m.sample_rate,
                             )
         return self._add_view(gui, v)
     
