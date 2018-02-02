@@ -287,6 +287,12 @@ class TemplateModel(object):
 
         self.metadata = self._load_metadata()
 
+        trk = self._load_tracking()
+        if trk is not None:
+            self.tracking = trk
+        else:
+            self.tracking = None
+
     def _create_waveform_loader(self):
         # Number of time samples in the templates.
         nsw = self.n_samples_templates
@@ -485,6 +491,15 @@ class TemplateModel(object):
             rows = None
 
         return Bunch(data=data, cols=cols, rows=rows)
+
+    def _load_tracking(self):
+        try:
+            t = self._read_array('tracking_timestamps')
+            x = self._read_array('tracking_x')
+            y = self._read_array('tracking_y')
+            return np.stack((t, x, y), axis=-1)
+        except IOError:
+            return
 
     def _get_template_sparse(self, template_id):
         data, cols = self.sparse_templates.data, self.sparse_templates.cols
