@@ -540,9 +540,10 @@ class TemplateController(EventEmitter):
         # pdb.set_trace()
         m = self.model
         v = SpatialView(spike_times=m.spike_times,
-                            spike_clusters=m.spike_clusters,
-                            sample_rate=m.sample_rate,
-                            )
+                        spike_clusters=m.spike_clusters,
+                        sample_rate=m.sample_rate,
+                        tracking_data=m.tracking_data
+                        )
         return self._add_view(gui, v)
     
     # GUI

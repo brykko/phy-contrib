@@ -289,9 +289,9 @@ class TemplateModel(object):
 
         trk = self._load_tracking()
         if trk is not None:
-            self.tracking = trk
+            self.tracking_data = trk
         else:
-            self.tracking = None
+            self.tracking_data = None
 
     def _create_waveform_loader(self):
         # Number of time samples in the templates.
@@ -497,7 +497,8 @@ class TemplateModel(object):
             t = self._read_array('tracking_timestamps')
             x = self._read_array('tracking_x')
             y = self._read_array('tracking_y')
-            return np.stack((t, x, y), axis=-1)
+            hd = self._read_array('tracking_hd')
+            return np.stack((t, x, y, hd), axis=-1)
         except IOError:
             return
 
