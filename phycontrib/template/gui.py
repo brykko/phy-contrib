@@ -537,12 +537,19 @@ class TemplateController(EventEmitter):
     # Spatial view
     # -------------------------------------------------------------------------
     def add_spatial_view(self, gui):
-        # pdb.set_trace()
         m = self.model
+        # params.py file may contain a timerange restriction for SpatialView.
+        # Pass this to the SpatialView if it exists.
+        if hasattr(m, "spatialview_timerange"):
+            timerange = m.spatialview_timerange
+        else:
+            timerange = None
+
         v = SpatialView(spike_samples=m.spike_samples,
                         spike_clusters=m.spike_clusters,
                         sample_rate=m.sample_rate,
-                        tracking_data=m.tracking_data
+                        tracking_data=m.tracking_data,
+                        timerange=timerange
                         )
         return self._add_view(gui, v)
     
