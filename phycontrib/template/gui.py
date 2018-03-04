@@ -538,18 +538,23 @@ class TemplateController(EventEmitter):
     # -------------------------------------------------------------------------
     def add_spatial_view(self, gui):
         m = self.model
-        # params.py file may contain a timerange restriction for SpatialView.
+        # params.py file may contain time-ranges for SpatialView.
         # Pass this to the SpatialView if it exists.
         if hasattr(m, "spatialview_timerange"):
-            timerange = m.spatialview_timerange
+            time_ranges = m.spatialview_timerange
+            # May be a single timerange e.g. (0, 100), or multiple timeranges
+            # e.g. ((0, 100), (500, 700)). Convert the former so it looks like
+            # the latter
+            if not hasattr(time_ranges[0], "__iter__"):
+                time_ranges = (time_ranges, )
         else:
-            timerange = None
+            time_ranges = None
 
         v = SpatialView(spike_samples=m.spike_samples,
                         spike_clusters=m.spike_clusters,
                         sample_rate=m.sample_rate,
                         tracking_data=m.tracking_data,
-                        timerange=timerange
+                        time_ranges=time_ranges
                         )
         return self._add_view(gui, v)
     
