@@ -170,12 +170,12 @@ def from_sparse(data, cols, channel_ids):
 class TemplateModel(object):
     n_closest_channels = 16
 
-    def __init__(self, dat_path=None, **kwargs):
+    def __init__(self, dat_path=None, proc_path=None, **kwargs):
         dat_path = dat_path or ''
         dir_path = (op.dirname(op.abspath(op.expanduser(dat_path)))
                     if dat_path else os.getcwd())
         self.dat_path = dat_path
-        self.dir_path = dir_path
+        self.dir_path = proc_path if proc_path else dir_path
         self.__dict__.update(kwargs)
 
         self.dtype = getattr(self, 'dtype', np.int16)

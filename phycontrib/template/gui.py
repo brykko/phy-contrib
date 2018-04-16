@@ -79,12 +79,15 @@ class TemplateController(EventEmitter):
     n_spikes_amplitudes = 10000
     n_spikes_correlograms = 100000
 
-    def __init__(self, dat_path=None, config_dir=None, model=None, **kwargs):
+    def __init__(self, dat_path=None, proc_path=None, config_dir=None, model=None, **kwargs):
         super(TemplateController, self).__init__()
         if model is None:
             assert dat_path
             dat_path = op.abspath(dat_path)
-            self.model = TemplateModel(dat_path, **kwargs)
+            self.model = TemplateModel(
+                dat_path=dat_path,
+                proc_path=proc_path,
+                **kwargs)
         else:
             self.model = model
         self.cache_dir = op.join(self.model.dir_path, '.phy')
