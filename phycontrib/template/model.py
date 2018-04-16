@@ -172,10 +172,11 @@ class TemplateModel(object):
 
     def __init__(self, dat_path=None, proc_path=None, **kwargs):
         dat_path = dat_path or ''
-        dir_path = (op.dirname(op.abspath(op.expanduser(dat_path)))
-                    if dat_path else os.getcwd())
         self.dat_path = dat_path
-        self.dir_path = proc_path if proc_path else dir_path
+
+        self.dir_path = (op.dirname(op.abspath(op.expanduser(proc_path)))
+                    if proc_path else os.getcwd())
+
         self.__dict__.update(kwargs)
 
         self.dtype = getattr(self, 'dtype', np.int16)
